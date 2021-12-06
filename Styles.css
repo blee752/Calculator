@@ -1,0 +1,173 @@
+body {
+    height: 100vh;
+    display:flex;
+    flex-direction: column;
+    background: #f6f6f6;
+
+}
+
+.main-container {
+    max-width: 400px;
+    margin:0 auto;
+    border: 2px solid #111;
+    border-radius: 5px;
+ }
+
+.calc-button {
+    background:rgba(0,0,0,0.3);
+    border: 1px solid #111;
+    padding:20px;
+    color:#EEE;
+    border-radius: 5px;
+    font-size: 22px;
+    cursor:pointer;
+}
+
+.main-container input {
+    background:none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+
+    padding: 10px 0px;
+    width: 100%;
+    border-bottom: 2px solid #111;
+    color:#333;
+    text-align: right;
+    font-size:40px;
+    border-radius: 0;;
+}
+
+.calc-buttons {
+    padding:20px;
+
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-gap: 15px;
+}
+
+.is-zero{
+    grid-column: span 2;
+}
+
+.is-clear{
+    grid-column: span 2;
+    background: #3572DB;
+}
+
+.is-equals {
+    background: #28d060;
+}
+
+.calc-button:hover {
+    background-color:rgba(0,0,0,0.5);
+}
+
+.calc-button:active {
+    background-color:rgba(0,0,0,1);
+    transform: translateY(4px);
+}
+
+.is-clear:hover{
+    grid-column: span 2;
+    background: #2755a5;
+}
+
+.is-equals:hover {
+    background: #19833d;
+}
+
+.is-clear:active{
+    background: #17305c;
+}
+
+.is-equals:active {
+    background: #0e5224;
+}
+
+
+/* 
+.main-container {
+    justify-content: center;
+    align-items: center;
+    flex: 1 auto;
+    display: flex;
+    background: red;
+}
+
+.calculator-body {
+    display:flex;
+    flex-direction: column;
+    background-color: blue;
+    width: 35vw;
+    height: 75vh;
+}
+
+.input {
+    flex: 3 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.operator {
+    flex: 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+ */
+
+/* 
+.top {
+
+    grid-area: tp;
+}
+.upper {
+    grid-area: up;
+}
+.mid{
+    grid-area: md;
+}
+
+.lower {
+    grid-area: low;
+}
+
+.bottom {
+    grid-area: bt;
+}
+
+.grid-container {
+    display:grid;
+    grid-template-rows: auto;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-areas: 
+    ".   tp  tp  ."
+    ".   .   .   ."
+    "up  up  up  up"
+    "md  md  md  md"
+    "low low low low"
+    "bt  bt  bt  bt";
+}
+
+/* 
+.buttons {
+    height: 100%;
+    display:flex;
+}
+
+.upper, .mid, .lower, .bottom {
+    flex: 1 auto;
+    display:flex;
+}
+
+.num {
+    flex: 1 auto;
+}
+
+
+
+.operator-button {
+    flex:1 auto;
+    background-color: darkgrey;
+} */
+
