@@ -1,41 +1,42 @@
 let inputValue = null; //stores all of the inputs as a string
 let answer = null; //stores the value of the operations. Update as more inputs are being entered
-function add(a,b) {
+function add(b) {
     //add numbers
-    return a+b;
+    return answer+b;
 }
 
-function subtract(a,b) {
+function subtract(b) {
     //subtract numbers
-    return a-b;
+    return answer-b;
 }
 
-function multiply(a,b){
+function multiply(b){
     //multiply numbers
-    return a*b;
+    return answer*b;
 }
 
-function divide(a,b) {
+function divide(b) {
     //divide numbers
-    return a/b;
+    return answer/b;
 }
 
-function operate(operator, n1,n2) {
+function operate(operator, n2) {
     let result = 0;
     switch(operator) {
         case '+':
-            result = add(n1,n2);
+            result = add(n2);
             break;
-        case '-':
-            result = subtract(n1,n2);
+        case '−':
+            result = subtract(n2);
             break;
-        case '*':
-            result = multiply(n1,n2);
+        case 'x':
+            result = multiply(n2);
             break;
         case '/':
-            result = divide(n1,n2);
+            result = divide(n2);
             break;
         }   
+        answer = result;
 }
 const input = document.querySelector('input');
 const numbt = document.querySelectorAll('.num');
@@ -46,6 +47,8 @@ bt.forEach(bt => {
         if(inputValue !== null){
             if (inputValue.split(' ').length >= 3) {
             //send it to a function to calculate current value + previous digit
+            let splitStr = inputValue.split(' '); 
+            stringEval(splitStr[splitStr.length - 2], input.value);
         }
         }
         
@@ -53,6 +56,7 @@ bt.forEach(bt => {
             let currentVal = input.value;
             currentVal +=  ` ${e.target.innerText} `;
             inputValue = currentVal;
+            answer = input.valueAsNumber;
             clear();
         }
         else {
@@ -89,9 +93,6 @@ numbt.forEach(button => {
     })
 })
 
-
-
-function strEval (str) {
-
+function stringEval (operator, strNum) {
+   operate(operator, Number(strNum));
 }
-
