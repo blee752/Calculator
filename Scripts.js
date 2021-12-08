@@ -1,6 +1,7 @@
 let inputValue = null; //stores all of the inputs as a string
 let answer = null; //stores the value of the operations. Update as more inputs are being entered
 
+const history = document.querySelector('.history');
 const clearBt = document.querySelector('.is-clear');
 const delBt = document.querySelector('.is-del');
 function add(b) {
@@ -77,14 +78,17 @@ bt.forEach(bt => {
             currentVal +=  ` ${e.target.innerText} `;
             inputValue = currentVal;
             answer = input.valueAsNumber;
+            history.innerText = inputValue;
             clear();
         }
         else {
         let currentVal = input.value;
         currentVal +=  ` ${e.target.innerText} `;
         inputValue += currentVal;
+        history.innerText = inputValue;
         if(e.target.innerText === '='){
             stringEval(e.target.innerText, undefined);
+            history.innerText = inputValue;
         }
         /* if(splitStr[splitStr.length - 1 ] === '=') {
                 stringEval(stringEval[splitStr.length - 1], undefined);
@@ -106,6 +110,7 @@ function fullClear() {
     input.value = null;
     answer = null;
     inputValue = null;
+    history.innerText = null;
 }
 
 numbt.forEach(button => {
