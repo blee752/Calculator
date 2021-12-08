@@ -1,5 +1,6 @@
 let inputValue = null; //stores all of the inputs as a string
 let answer = null; //stores the value of the operations. Update as more inputs are being entered
+let prevNum = null;
 
 const history = document.querySelector('.history');
 const clearBt = document.querySelector('.is-clear');
@@ -52,7 +53,7 @@ function operate(operator, n2) {
             inputValue += answer;
             break;
         }   
-        
+        prevNum = n2;
 }
 
 
@@ -77,7 +78,13 @@ bt.forEach(bt => {
         }}
 
         if(inputValue === null){ //first pass, assign inputValue to current value in the display
+            if(input.value === ''){
+                history.innerText = '0 =';
+                input.value = 0;
+                return;
+            }
             let currentVal = input.value;
+            prevNum = Number(input.value);
             currentVal +=  ` ${e.target.innerText} `;
             inputValue = currentVal;
             answer = input.valueAsNumber;
@@ -93,6 +100,7 @@ bt.forEach(bt => {
             stringEval(e.target.innerText, undefined);
             history.innerText = inputValue;
         }
+        
         clear();
         updateDisplay();
         }
