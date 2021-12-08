@@ -4,6 +4,11 @@ let answer = null; //stores the value of the operations. Update as more inputs a
 const history = document.querySelector('.history');
 const clearBt = document.querySelector('.is-clear');
 const delBt = document.querySelector('.is-del');
+const input = document.querySelector('input');
+const numbt = document.querySelectorAll('.num');
+const bt = document.querySelectorAll('.operator');
+
+
 function add(b) {
     //add numbers
     return answer+b;
@@ -49,9 +54,7 @@ function operate(operator, n2) {
         }   
         
 }
-const input = document.querySelector('input');
-const numbt = document.querySelectorAll('.num');
-const bt = document.querySelectorAll('.operator');
+
 
 clearBt.addEventListener('click', (e) => {
     fullClear();
@@ -66,14 +69,14 @@ delBt.addEventListener('click', (e) => {
 
 bt.forEach(bt => {
     bt.addEventListener('click', (e) => {
-        if(inputValue !== null){
-            if (inputValue.split(' ').length >= 3) {
+        if(inputValue !== null){ //if a inputValue is not null, previous inputs have been inserted into the calculator
+            if (inputValue.split(' ').length >= 3) { //checks if a number and operator are in the history variable
             //send it to a function to calculate current value + previous digit
             let splitStr = inputValue.split(' '); 
             stringEval(splitStr[splitStr.length - 2], input.value);
         }}
 
-        if(inputValue === null){
+        if(inputValue === null){ //first pass, assign inputValue to current value in the display
             let currentVal = input.value;
             currentVal +=  ` ${e.target.innerText} `;
             inputValue = currentVal;
@@ -81,39 +84,33 @@ bt.forEach(bt => {
             history.innerText = inputValue;
             clear();
         }
-        else {
+        else { //second and onwards pass, add input value along with the new input
         let currentVal = input.value;
         currentVal +=  ` ${e.target.innerText} `;
         inputValue += currentVal;
         history.innerText = inputValue;
-        if(e.target.innerText === '='){
+        if(e.target.innerText === '='){ //checks if the = operator is pressed, if so send it to operation function to add the calculated answer to inputValue
             stringEval(e.target.innerText, undefined);
             history.innerText = inputValue;
         }
-        /* if(splitStr[splitStr.length - 1 ] === '=') {
-                stringEval(stringEval[splitStr.length - 1], undefined);
-            } */
         clear();
         updateDisplay();
         }
-
-        /* if() run the check before adding onto the string */
-
     })
 });
 
-function clear() {
+function clear() { //clears input field's value
     input.value = null;
 }
 
-function fullClear() {
+function fullClear() { //resets entire calculator
     input.value = null;
     answer = null;
     inputValue = null;
     history.innerText = null;
 }
 
-numbt.forEach(button => {
+numbt.forEach(button => { //onclick  add the button number value to the input field
     button.addEventListener('click', (e) => {
         if(input.dataset.prevCalcd === 'true') {
             clear();
@@ -125,29 +122,17 @@ numbt.forEach(button => {
     })
 })
 
-function stringEval (operator, strNum) {
+function stringEval (operator, strNum) { //converts number given from string to a num for the operation function to work with it
    operate(operator, Number(strNum));
 
 }
 
-function updateDisplay(){
+function updateDisplay(){ //update input display with the current calculated value after each operation press
     input.value = answer;
-    input.dataset.prevCalcd = true;
+    input.dataset.prevCalcd = true; //data set value, if true, clear before adding the button value to the input field
 }
 
 /* cases to handle:
 - if input field is empty, take operator on and use previous / answer value
     - if answer is also null/empty, return 0 or error */
 
-/* functionality to do still:
-- add additional div to the display to show the total sequence of operations
-- update input field with answer? -DONE
-    ie: 5 + 5 + should show 10 and as the user enters the new value it should clear and show the number entered
-    IE2: 5+ 5 + > 10 + > click 1 and 10 should disappear and 1 should display. On click of equals or operator 
-        it should display the new current answer value
-        
-        
-        
-- clear button needs to actually clear
-- delete button needs to remove the last entered digit
-- equals opeartor needs to work*/
