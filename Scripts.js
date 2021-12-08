@@ -28,25 +28,32 @@ function operate(operator, n2) {
     switch(operator) {
         case '+':
             result = add(n2);
+            answer = result;
             break;
         case '−':
             result = subtract(n2);
+            answer = result;
             break;
         case 'x':
             result = multiply(n2);
+            answer = result;
             break;
         case '/':
             result = divide(n2);
+            answer = result;
+            break;
+        case '=':
+            inputValue += answer;
             break;
         }   
-        answer = result;
+        
 }
 const input = document.querySelector('input');
 const numbt = document.querySelectorAll('.num');
 const bt = document.querySelectorAll('.operator');
 
 clearBt.addEventListener('click', (e) => {
-    clear();
+    fullClear();
 })
 
 delBt.addEventListener('click', (e) => {
@@ -63,9 +70,8 @@ bt.forEach(bt => {
             //send it to a function to calculate current value + previous digit
             let splitStr = inputValue.split(' '); 
             stringEval(splitStr[splitStr.length - 2], input.value);
-        }
-        }
-        
+        }}
+
         if(inputValue === null){
             let currentVal = input.value;
             currentVal +=  ` ${e.target.innerText} `;
@@ -77,6 +83,12 @@ bt.forEach(bt => {
         let currentVal = input.value;
         currentVal +=  ` ${e.target.innerText} `;
         inputValue += currentVal;
+        if(e.target.innerText === '='){
+            stringEval(e.target.innerText, undefined);
+        }
+        /* if(splitStr[splitStr.length - 1 ] === '=') {
+                stringEval(stringEval[splitStr.length - 1], undefined);
+            } */
         clear();
         updateDisplay();
         }
@@ -88,6 +100,12 @@ bt.forEach(bt => {
 
 function clear() {
     input.value = null;
+}
+
+function fullClear() {
+    input.value = null;
+    answer = null;
+    inputValue = null;
 }
 
 numbt.forEach(button => {
@@ -104,6 +122,7 @@ numbt.forEach(button => {
 
 function stringEval (operator, strNum) {
    operate(operator, Number(strNum));
+
 }
 
 function updateDisplay(){
