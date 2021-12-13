@@ -35,19 +35,19 @@ function operate(operator, n2) {
     switch(operator) {
         case '+':
             result = add(n2);
-            answer = result;
+            answer = checkDecimal(result);
             break;
         case '−':
             result = subtract(n2);
-            answer = result;
+            answer = checkDecimal(result);
             break;
         case 'x':
             result = multiply(n2);
-            answer = result;
+            answer = checkDecimal(result);
             break;
         case '/':
             result = divide(n2);
-            answer = result;
+            answer = checkDecimal(result);
             break;
         case '=':
             inputValue += answer;
@@ -165,6 +165,18 @@ decmialBt.addEventListener('click', (e) => {
     str += e.target.innerText;
     input.innerText = str;
 })
+
+function checkDecimal(num) {
+    if(num.toString().includes('.')){
+        const numStr = String(num);
+        const decimalCount = numStr.split('.')[1].length;
+ 
+        if(decimalCount > 4){
+            num = num.toFixed(3);
+        }
+    }
+    return num;
+}
 
 /* cases to handle:
 - if input field is empty, take operator on and use previous / answer value
