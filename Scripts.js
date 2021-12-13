@@ -5,10 +5,10 @@ let prevNum = null;
 const history = document.querySelector('.history');
 const clearBt = document.querySelector('.is-clear');
 const delBt = document.querySelector('.is-del');
-const input = document.querySelector('input');
+const input = document.querySelector('.input');
 const numbt = document.querySelectorAll('.num');
 const bt = document.querySelectorAll('.operator');
-
+const decmialBt = document.querySelector('.is-decimal');
 
 function add(b) {
     //add numbers
@@ -62,9 +62,9 @@ clearBt.addEventListener('click', (e) => {
 })
 
 delBt.addEventListener('click', (e) => {
-    let updatedNum = input.value;
+    let updatedNum = input.innerText;
     updatedNum = updatedNum.substring(0,updatedNum.length -1);
-    input.value = updatedNum;
+    input.innerText = updatedNum;
 })
 
 
@@ -74,31 +74,37 @@ bt.forEach(bt => {
             if (inputValue.split(' ').length >= 3) { //checks if a number and operator are in the history variable
             //send it to a function to calculate current value + previous digit
             let splitStr = inputValue.split(' '); 
-            stringEval(splitStr[splitStr.length - 2], input.value);
+            stringEval(splitStr[splitStr.length - 2], input.innerText);
+        }}
+
+        if(inputValue !== null){
+            if(inputValue.includes('=')){
+                inputValue = null;
         }}
 
         if(inputValue === null){ //first pass, assign inputValue to current value in the display
-            if(input.value === ''){
+            if(input.innerText === ''){
                 history.innerText = '0 =';
-                input.value = 0;
+                input.innerText = 0;
                 return;
             }
-            let currentVal = input.value;
-            prevNum = Number(input.value);
+            let currentVal = input.innerText;
+            prevNum = Number(input.innerText);
             currentVal +=  ` ${e.target.innerText} `;
             inputValue = currentVal;
-            answer = input.valueAsNumber;
+            answer = Number(input.innerText);
             history.innerText = inputValue;
             clear();
         }
         else { //second and onwards pass, add input value along with the new input
-        let currentVal = input.value;
+        let currentVal = input.innerText;
         currentVal +=  ` ${e.target.innerText} `;
         inputValue += currentVal;
         history.innerText = inputValue;
         if(e.target.innerText === '='){ //checks if the = operator is pressed, if so send it to operation function to add the calculated answer to inputValue
             stringEval(e.target.innerText, undefined);
             history.innerText = inputValue;
+            input.dataset.finishedCalc = true;
         }
         
         clear();
@@ -108,11 +114,11 @@ bt.forEach(bt => {
 });
 
 function clear() { //clears input field's value
-    input.value = null;
+    input.innerText = null;
 }
 
 function fullClear() { //resets entire calculator
-    input.value = null;
+    input.innerText = null;
     answer = null;
     inputValue = null;
     history.innerText = null;
@@ -124,9 +130,9 @@ numbt.forEach(button => { //onclick  add the button number value to the input fi
             clear();
             input.dataset.prevCalcd = false;
         }
-        let str = input.value;
+        let str = input.innerText;
         str += e.target.innerText;
-        input.value = str;
+        input.innerText = str;
     })
 })
 
@@ -136,9 +142,29 @@ function stringEval (operator, strNum) { //converts number given from string to 
 }
 
 function updateDisplay(){ //update input display with the current calculated value after each operation press
-    input.value = answer;
+/*     if(input.dataset.finishedCalc === 'true'){
+        answer = input.innerText;
+        input.innerText = answer;
+        input.dataset.finishedCalc = false;
+    } */
+
+    input.innerText = answer;
+    
     input.dataset.prevCalcd = true; //data set value, if true, clear before adding the button value to the input field
 }
+
+decmialBt.addEventListener('click', (e) => {
+    if(input.dataset.prevCalcd === 'true') {
+        clear();
+        input.dataset.prevCalcd = false;
+    }
+    if(input.innerText.includes('.')){
+        return;
+    }
+    let str = input.innerText;
+    str += e.target.innerText;
+    input.innerText = str;
+})
 
 /* cases to handle:
 - if input field is empty, take operator on and use previous / answer value
