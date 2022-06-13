@@ -54,6 +54,7 @@ function operate(operator, n2) {
             break;
         }   
         prevNum = n2;
+
 }
 
 
@@ -102,7 +103,7 @@ bt.forEach(bt => {
         inputValue += currentVal;
         history.innerText = inputValue;
         if(e.target.innerText === '='){ //checks if the = operator is pressed, if so send it to operation function to add the calculated answer to inputValue
-            stringEval(e.target.innerText, undefined);
+            stringEval(e.target.innerText, prevNum);
             history.innerText = inputValue;
             input.dataset.finishedCalc = true;
         }
